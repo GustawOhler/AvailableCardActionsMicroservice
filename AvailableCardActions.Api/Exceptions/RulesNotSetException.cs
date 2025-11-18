@@ -1,6 +1,9 @@
-public class RulesNotSetException : Exception
+namespace AvailableCardActions.Api.Exceptions
 {
-    public RulesNotSetException(string? message = null) : base(message)
+    public class RulesNotSetException : Exception
     {
+        public RulesNotSetException(string? message = null) : base(message)
+        {
+        }
     }
 }

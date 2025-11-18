@@ -10,11 +10,11 @@ using System.Linq;
 [TestClass]
 public sealed class CardControllerTests
 {
-    Mock<ILogger<CardController>> logger;
+    Mock<ILogger<CardsController>> logger;
     Mock<ICardService> cardService;
     public CardControllerTests()
     {
-        logger = new Mock<ILogger<CardController>>();
+        logger = new Mock<ILogger<CardsController>>();
         cardService = new Mock<ICardService>();
     }
 
@@ -32,11 +32,11 @@ public sealed class CardControllerTests
         cardService.Setup(x => x.GetAuthorizedActions(userId, cardNumber))
             .ReturnsAsync(expectedActions);
 
-        var controller = new CardController(logger.Object, cardService.Object);
+        var controller = new CardsController(logger.Object, cardService.Object);
 
         var result = await controller.GetAvailableCardActions(cardNumber, userId);
 
-        CollectionAssert.AreEquivalent(expectedActions.ToList(), result.ToList());
+        CollectionAssert.AreEquivalent(expectedActions.ToList(), result.Value!.ToList());
         cardService.Verify(x => x.GetAuthorizedActions(userId, cardNumber), Times.Once);
     }
 }

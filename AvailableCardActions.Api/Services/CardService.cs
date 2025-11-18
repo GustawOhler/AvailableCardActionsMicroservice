@@ -1,4 +1,5 @@
 using AvailableCardActions.Api.Domain;
+using AvailableCardActions.Api.Exceptions;
 using AvailableCardActions.Api.Interfaces;
 using Microsoft.Extensions.Logging;
 
@@ -42,7 +43,7 @@ namespace AvailableCardActions.Api.Services
             if (cardDetails == null)
             {
                 _logger.LogWarning("Cannot retrieve actions because card details were missing for user {UserId} and card {CardNumber}", userId, cardNumber);
-                return Enumerable.Empty<SystemAction>();
+                throw new NotFoundException($"Card details not found for user {userId} and card {cardNumber}");
             }
 
             var authorizedActions = _authorizator.GetAuthorizedActions(cardDetails).ToList();

@@ -1,6 +1,7 @@
 namespace AvailableCardActions.Api.Tests;
 
 using AvailableCardActions.Api.Domain;
+using AvailableCardActions.Api.Exceptions;
 using AvailableCardActions.Api.Services;
 using Microsoft.Extensions.Logging;
 using Moq;

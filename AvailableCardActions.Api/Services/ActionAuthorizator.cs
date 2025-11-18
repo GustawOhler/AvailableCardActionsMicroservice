@@ -1,4 +1,5 @@
 using AvailableCardActions.Api.Domain;
+using AvailableCardActions.Api.Exceptions;
 using AvailableCardActions.Api.Interfaces;
 using Microsoft.Extensions.Logging;
 
