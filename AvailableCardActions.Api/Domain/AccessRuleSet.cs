@@ -113,7 +113,7 @@ namespace AvailableCardActions.Api.Services
                 new SystemActionRule(SystemAction.Action5),
                 new SystemActionRule(SystemAction.Action9),
             }},
-            {CardStatus.Restricted, new List<SystemActionRule>{
+            {CardStatus.Closed, new List<SystemActionRule>{
                 new SystemActionRule(SystemAction.Action3),
                 new SystemActionRule(SystemAction.Action4),
                 new SystemActionRule(SystemAction.Action5),

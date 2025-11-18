@@ -1,8 +1,21 @@
+using AvailableCardActions.Api.Interfaces;
+using AvailableCardActions.Api.Services;
+using System.Text.Json.Serialization;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
 
-builder.Services.AddControllers();
+// Add services to the container.
+builder.Services.AddScoped<IActionAuthorizator, ActionAuthorizator>();
+builder.Services.AddScoped<ICardService, CardService>();
+
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
