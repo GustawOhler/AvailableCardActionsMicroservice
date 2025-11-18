@@ -20,23 +20,25 @@ namespace AvailableCardActions.Api.Services
 
             if (AccessRuleSet.CardTypeRules.TryGetValue(cardDetails.CardType, out var typeRules))
             {
-                _logger.LogTrace("Applying type rules for card {CardNumber} with type {CardType}", cardDetails.CardNumber, cardDetails.CardType);
+                _logger.LogTrace("Getting card type rules for card {CardNumber} with type {CardType}", cardDetails.CardNumber, cardDetails.CardType);
                 authorizedActions = GetActionsInRules(cardDetails, typeRules);
             }
             else
             {
                 _logger.LogWarning("No card type rules found for card type {CardType}", cardDetails.CardType);
+                throw new RulesNotSetException($"No card type rules found for card type {cardDetails.CardType}");
             }
 
             if (AccessRuleSet.CardStatusRules.TryGetValue(cardDetails.CardStatus, out var statusRules))
             {
-                _logger.LogTrace("Applying status rules for card {CardNumber} with status {CardStatus}", cardDetails.CardNumber, cardDetails.CardStatus);
+                _logger.LogTrace("Getting card status rules for card {CardNumber} with status {CardStatus}", cardDetails.CardNumber, cardDetails.CardStatus);
                 var allowedActionsByStatus = GetActionsInRules(cardDetails, statusRules);
                 authorizedActions.IntersectWith(allowedActionsByStatus);
             }
             else
             {
                 _logger.LogWarning("No card status rules found for card status {CardStatus}", cardDetails.CardStatus);
+                throw new RulesNotSetException($"No card status rules found for card status {cardDetails.CardStatus}");
             }
 
             _logger.LogInformation("Authorized {ActionCount} actions for card {CardNumber}", authorizedActions.Count, cardDetails.CardNumber);

@@ -16,6 +16,15 @@ builder.Services.AddControllers()
     {
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
+
+var configuredHttpsPort = builder.Configuration.GetValue<int?>("HttpsPort");
+if (configuredHttpsPort.HasValue)
+{
+    builder.Services.AddHttpsRedirection(options =>
+    {
+        options.HttpsPort = configuredHttpsPort.Value;
+    });
+}
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -28,7 +37,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+if (configuredHttpsPort.HasValue)
+{
+    app.UseHttpsRedirection();
+}
 
 app.UseAuthorization();
 
